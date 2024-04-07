@@ -4,7 +4,7 @@ import cookieSession from "cookie-session";
 import cors from "cors";
 import logger from "morgan";
 import indexRoutes from "../routes/index.routes";
-import { errorHandler } from "../middlewares";
+import { errorHandler } from "../middlewares/errorHandler";
 
 const app = express();
 app.set("trust proxy", true);

@@ -1,42 +1,24 @@
 import { Response } from "express";
 
-type PageProps = {
-  limit: number;
-  page: number;
-  total: number;
-};
-
-export class EntriesFoundHandler {
+export class EntryFoundHandler {
   private res: Response;
   private data: any;
   private message: string;
-  private entriesFound: number;
+  private entryFound: boolean;
   private statusCode = 200;
-  private pageProps: PageProps | undefined;
-
-  constructor(
-    res: Response,
-    message: string,
-    data: any,
-    length: number = 0,
-    pageProps?: PageProps
-  ) {
+  constructor(res: Response, message: string, data: any, entryFound = true) {
     this.res = res;
-    this.entriesFound = data.length || length;
+    this.entryFound = entryFound;
     this.message = message;
     this.data = data;
-    this.pageProps = pageProps;
     this.send();
   }
 
   private send() {
     this.res.status(this.statusCode).json({
-      entriesFound: this.entriesFound,
+      entryFound: this.entryFound,
       message: this.message,
-      data: this.data,
-      pageIndex: this.pageProps?.page,
-      pageSize: this.pageProps?.limit,
-      totalSize: this.pageProps?.total,
+      ...this.data,
     });
   }
 }

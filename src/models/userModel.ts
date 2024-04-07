@@ -14,7 +14,10 @@ interface UserAttributes {
   name: string;
   email: string;
   password?: string;
-  profilePicture?: string;
+  profilePicture: string;
+  otp?: string;
+  otpExpires?: Date;
+  isVerified?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -57,51 +60,73 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
   @Column({
     type: DataType.STRING,
     allowNull: false,
-    unique: true,
-  })
-  declare mobileNumber: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-    defaultValue: "",
   })
   declare profilePicture: string;
 
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  })
+  declare isVerified: boolean;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  declare otp: string;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  declare otpExpires: Date;
+
   @BeforeSave
   static async hashPassword(instance: User) {
-    instance.password = await Encrypt(instance.password);
+    if (instance.changed("password")) {
+      instance.password = await Encrypt(instance.password);
+    }
   }
 
   @BeforeSave
   static capitalize(instance: User) {
-    instance.name = instance.name
-      .split(" ")
-      .map((word) => {
-        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-      })
-      .join(" ");
+    if (instance.changed("name")) {
+      instance.name = instance.name
+        .split(" ")
+        .map((word) => {
+          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        })
+        .join(" ");
+    }
   }
 
   @BeforeSave
   static toLowerCase(instance: User) {
-    instance.email = instance.email.toLowerCase();
+    if (instance.changed("email")) {
+      instance.email = instance.email.toLowerCase();
+    }
   }
 
-  comparePassword(password: string) {
-    return Decrypt(password, this.password);
+  async comparePassword(password: string) {
+    const matched = Decrypt(password, this.password);
+    return matched;
   }
 
   generateToken() {
     return getToken({
       id: this.id,
       email: this.email,
+      type: "user",
     });
   }
 
   toJSON() {
     const user = { ...this.get() };
     delete user.password;
+    delete user.otp;
+    delete user.otpExpires;
+    delete user.isVerified;
     return user;
   }
 }

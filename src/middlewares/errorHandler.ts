@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { CustomError } from "../common/errors";
 import { deleteFile } from "../common/deleteFile";
+import { deleteFromCloudinary } from "../common/deleteFromCloudinary";
 
 export const errorHandler = (
   err: Error,
@@ -10,6 +11,10 @@ export const errorHandler = (
 ) => {
   if (req.file) {
     deleteFile(req.file.path);
+  }
+
+  if (req.image) {
+    deleteFromCloudinary(req.image);
   }
 
   if (err instanceof CustomError) {
