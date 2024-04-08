@@ -34,9 +34,7 @@ export class EntriesFoundHandler {
       entriesFound: this.entriesFound,
       message: this.message,
       data: this.data,
-      pageIndex: this.pageProps?.page,
-      pageSize: this.pageProps?.limit,
-      totalSize: this.pageProps?.total,
+      ...this.pageProps,
     });
   }
 }

@@ -14,10 +14,7 @@ export const removeAdmin = async (req: Request, res: Response) => {
   }
 
   if (admin.profilePicture !== "") {
-    const publicId =
-      "profile_pictures/" +
-      admin.profilePicture.split("/").pop()!.split(".").slice(0, -1).join(".");
-    deleteFromCloudinary(publicId);
+    deleteFromCloudinary(admin.profilePicture);
   }
 
   await adminRepo.remove(admin.id);

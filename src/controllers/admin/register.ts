@@ -23,9 +23,10 @@ export const register = async (req: Request, res: Response) => {
   let profilePicture = "";
 
   if (image) {
+    const id = image.filename.split(".")[0];
     profilePicture = await uploadToCloudinary(
       "profile_pictures",
-      image.filename,
+      id,
       image,
       req
     );

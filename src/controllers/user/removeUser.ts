@@ -14,10 +14,7 @@ export const removeUser = async (req: Request, res: Response) => {
   }
 
   if (user.profilePicture !== "") {
-    const publicId =
-      "profile_pictures/" +
-      user.profilePicture.split("/").pop()!.split(".").slice(0, -1).join(".");
-    deleteFromCloudinary(publicId);
+    deleteFromCloudinary(user.profilePicture);
   }
 
   await userRepo.remove(user.id);
