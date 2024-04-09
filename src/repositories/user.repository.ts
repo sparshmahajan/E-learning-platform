@@ -35,7 +35,7 @@ class UserRepository {
     return user.toJSON();
   }
 
-  async verify(id: string) {
+  async verify(id: number) {
     const user = await User.findByPk(id);
 
     if (!user) {
@@ -50,7 +50,7 @@ class UserRepository {
     return user.toJSON();
   }
 
-  async update(id: string, data: {}) {
+  async update(id: number, data: {}) {
     const user = await User.findByPk(id);
 
     if (!user) {
@@ -62,7 +62,7 @@ class UserRepository {
     return user.toJSON();
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     const user = await User.findByPk(id);
 
     if (!user) {

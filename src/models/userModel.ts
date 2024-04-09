@@ -10,7 +10,7 @@ import { Encrypt, Decrypt } from "../security/bcrypt";
 import { Optional } from "sequelize";
 
 interface UserAttributes {
-  id: string;
+  id: number;
   name: string;
   email: string;
   password?: string;
@@ -36,7 +36,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
     autoIncrement: true,
     primaryKey: true,
   })
-  declare id: string;
+  declare id: number;
 
   @Column({
     type: DataType.STRING,

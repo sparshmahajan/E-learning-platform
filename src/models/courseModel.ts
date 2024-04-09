@@ -10,8 +10,8 @@ import { Optional } from "sequelize";
 import { Admin } from "./adminModel";
 
 interface CourseAttributes {
-  id: string;
-  createdBy: string;
+  id: number;
+  createdBy: number;
   title: string;
   description: string;
   image: string;
@@ -37,15 +37,14 @@ export class Course extends Model<CourseAttributes, CourseCreationAttributes> {
     autoIncrement: true,
     primaryKey: true,
   })
-  declare id: string;
+  declare id: number;
 
-  // Foreign key to the Admin model id is the primary key
   @ForeignKey(() => Admin)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  declare createdBy: string;
+  declare createdBy: number;
 
   @BelongsTo(() => Admin)
   declare instructor: Admin;

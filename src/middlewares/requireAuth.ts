@@ -3,7 +3,7 @@ import { BadRequestError, NotAuthorizedError } from "../common/errors";
 import { decodeToken } from "../security/jwt";
 
 interface UserPayload {
-  id: string;
+  id: number;
   email: string;
   type: string;
 }

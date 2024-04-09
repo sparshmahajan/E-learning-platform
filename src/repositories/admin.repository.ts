@@ -37,7 +37,7 @@ class AdminRepository {
     return admin.toJSON();
   }
 
-  async verify(id: string) {
+  async verify(id: number) {
     const admin = await Admin.findByPk(id);
 
     if (!admin) {
@@ -52,7 +52,7 @@ class AdminRepository {
     return admin.toJSON();
   }
 
-  async update(id: string, data: {}) {
+  async update(id: number, data: {}) {
     const admin = await Admin.findByPk(id);
 
     if (!admin) {
@@ -64,7 +64,7 @@ class AdminRepository {
     return admin.toJSON();
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     const admin = await Admin.findByPk(id);
 
     if (!admin) {

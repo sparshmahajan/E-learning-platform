@@ -10,7 +10,7 @@ import { Encrypt, Decrypt } from "../security/bcrypt";
 import { Optional } from "sequelize";
 
 interface AdminAttributes {
-  id: string;
+  id: number;
   name: string;
   email: string;
   password?: string;
@@ -36,7 +36,7 @@ export class Admin extends Model<AdminAttributes, AdminCreationAttributes> {
     autoIncrement: true,
     primaryKey: true,
   })
-  declare id: string;
+  declare id: number;
 
   @Column({
     type: DataType.STRING,
