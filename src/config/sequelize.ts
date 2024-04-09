@@ -38,8 +38,6 @@ export const sequelize = new Sequelize(process.env.DB_URL!, sequelizeOptions);
 export const sequelizeConnect = async () => {
   try {
     await sequelize.sync({ alter: true });
-    //print all tables
-    console.log(sequelize.models);
     await sequelize.authenticate();
     console.log("Database Connected successfully.");
   } catch (err) {
